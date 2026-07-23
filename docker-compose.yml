@@ -1,0 +1,20 @@
+services:
+  nba-producer:
+    build: ./docker/producer
+    container_name: nba-producer
+    networks:
+      - kafka_default
+    env_file:
+      - .env
+
+  nba-consumer:
+    build: ./docker/consumer
+    container_name: nba-consumer
+    networks:
+      - kafka_default
+    env_file:
+      - .env
+
+networks:
+  kafka_default:
+    external: true

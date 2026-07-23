@@ -1,0 +1,9 @@
+venv-producer/
+venv-consumer/
+*.pyc
+__pycache__/
+.env
+.DS_Storevenv-dashboard/
+venv-dashboard/
+airflow/logs/
+airflow/plugins/

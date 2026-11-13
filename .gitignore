@@ -1,9 +1,38 @@
-venv-producer/
-venv-consumer/
-*.pyc
-__pycache__/
+# Secrets
 .env
-.DS_Storevenv-dashboard/
-venv-dashboard/
+*.pem
+.databrickscfg
+
+# Python
+venv*/
+.venv/
+__pycache__/
+*.pyc
+
+# Mac
+.DS_Store
+
+# Airflow
 airflow/logs/
-airflow/plugins/
+airflow/airflow.db
+airflow/airflow.cfg
+airflow/webserver_config.py
+airflow/standalone_admin_password.txt
+
+# dbt
+target/
+dbt_packages/
+logs/
+
+# Spark / Kafka local state
+checkpoints/
+spark-warehouse/
+metastore_db/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local data files
+*.parquet
+*.csv
+!streamlit/data/*.parquet

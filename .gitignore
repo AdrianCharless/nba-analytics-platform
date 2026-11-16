@@ -36,3 +36,6 @@ metastore_db/
 *.parquet
 *.csv
 !streamlit/data/*.parquet
+sample_event.json
+sample_props.json
+data/

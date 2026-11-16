@@ -1,7 +1,11 @@
 import os, requests, json
 from dotenv import load_dotenv
 from datetime import datetime, timezone
-load_dotenv()
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent
+RAW_DIR = PROJECT_ROOT / "data" / "bronze"
+load_dotenv(PROJECT_ROOT / ".env")
 odds_api_key = os.getenv("SPORTSGAMEODDS_API_KEY")
 
 if not odds_api_key:
@@ -46,9 +50,9 @@ print("Total games:", len(all_games))
 # change utc datetime to string
 fetched_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H-%M-%SZ")
 # create filename for freshly ingested games
-filename = f"data/bronze/games_{fetched_at}.json"
+filename = RAW_DIR / f"games_{fetched_at}.json"
 # make directory if its not already created
-os.makedirs("data/bronze", exist_ok=True)
+RAW_DIR.mkdir(parents=True, exist_ok=True)
 
 with open(filename, "w") as f:
     json.dump(all_games, f)

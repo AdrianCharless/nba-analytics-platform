@@ -1,16 +1,20 @@
 # This file will read the nested JSON and flatten it into rows. 
-import json, os, glob
+import json, os
 from datetime import datetime, timezone
 import pandas as pd
+from pathlib import Path
 
-raw_files = sorted(glob.glob("data/bronze/games_*.json"))
+PROJECT_ROOT = Path(__file__).resolve().parent
+RAW_DIR = PROJECT_ROOT / "data" / "bronze"
+OUT_DIR = PROJECT_ROOT / "data" / "silver"
+raw_files = sorted(RAW_DIR.glob("games_*.json"))
 
 for path in raw_files:
-    name = os.path.basename(path)
+    name = path.name
     stamp = name.removeprefix("games_").removesuffix(".json")
-    out_path = f"data/silver/props_{stamp}.parquet"
+    out_path = OUT_DIR / f"props_{stamp}.parquet"
 
-    if os.path.exists(out_path):
+    if out_path.exists():
         continue
     print("Processing", path)
 
@@ -81,7 +85,7 @@ for path in raw_files:
     df["game_starts_at"] = pd.to_datetime(df["game_starts_at"], utc=True)
     df["book_updated_at"] = pd.to_datetime(df["book_updated_at"], utc=True)
 
-    os.makedirs("data/silver", exist_ok=True)
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
     df.to_parquet(out_path, index=False)
 
     print("Saved", out_path, "-", len(df), "rows")

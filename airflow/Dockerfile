@@ -7,4 +7,5 @@ RUN pip install --no-cache-dir \
     pandas \
     pyarrow \
     python-dotenv \
-    requests
+    requests \
+    nba_api
